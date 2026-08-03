@@ -26,7 +26,7 @@ namespace nu {
 		void UpdateCollisions();
 
 		std::vector<std::unique_ptr<Actor>> m_actors;
-		std::vector<std::unique_ptr<Actor*>> m_pendingActors;
+		std::vector<std::unique_ptr<Actor>> m_pendingActors;
 
 		class Game* m_game{ nullptr };
 	};
