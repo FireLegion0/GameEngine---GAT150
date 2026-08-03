@@ -1,0 +1,36 @@
+#pragma once
+#include "../Engine/Actor.h"
+
+struct BossDesc : public nu::ActorDesc {
+    float speed;
+    int health = 3;
+};
+
+class Boss : public nu::Actor {
+public:
+    Boss() = default;
+    Boss(const BossDesc& bossDesc) :
+        Actor{ bossDesc },
+        m_speed{ bossDesc.speed },
+        m_health{ bossDesc.health }
+    {
+    }
+    Boss(float speed, const nu::Transform& transform) :
+        Actor{ transform },
+        m_speed{ speed }
+    {
+    }
+    Boss(float speed, const nu::Transform& transform, const nu::Model& model) :
+        Actor{ transform, model },
+        m_speed{ speed }
+    {
+    }
+
+    void Update(float dt) override;
+    void OnCollision(Actor* other) override;
+    //void Draw(const class nu::Renderer& renderer) const override;
+private:
+    int m_ammo = 0;
+    int m_health = 3;
+    float m_speed = 200.0f;
+};
