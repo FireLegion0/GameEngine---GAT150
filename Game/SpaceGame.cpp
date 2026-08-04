@@ -48,7 +48,7 @@ void SpaceGame::Update(float dt) {
 		case GameState::StartLevel:
 			m_scene->RemvoeAllActors();
 			SpawnPlayer();
-			SpawnBoss();
+			//SpawnBoss();
 			m_spawnTime = 5.0f;
 			m_gamestate = GameState::Game;
 			break;

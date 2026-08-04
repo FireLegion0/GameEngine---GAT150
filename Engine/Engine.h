@@ -13,6 +13,7 @@
 #include "GameTime.h"
 #include "Particle.h"
 #include "Audio.h"
+#include "Texture.h"
 
 #include "Actor.h"
 #include "Scene.h"

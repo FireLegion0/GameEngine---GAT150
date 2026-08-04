@@ -13,16 +13,6 @@ public:
         m_speed{ astroidDesc.speed }
     {
     }
-    Astroid(float speed, const nu::Transform& transform) :
-        Actor{ transform },
-        m_speed{ speed }
-    {
-    }
-    Astroid(float speed, const nu::Transform& transform, const nu::Model& model) :
-        Actor{ transform, model },
-        m_speed{ speed }
-    {
-    }
 
     void Update(float dt) override;
     void OnCollision(Actor* other) override;

@@ -20,10 +20,12 @@ namespace nu {
     }
 
 	void Actor::Draw(const Renderer& renderer) const {
-        renderer.DrawModel(m_model, m_transform);
+        if(m_model){
+            renderer.DrawModel(*m_model, m_transform);
+        }
     }
 
     float Actor::GetRadius() const {
-        return m_model.GetRadius() * m_transform.scale * 0.7f;
+        return m_model->GetRadius() * m_transform.scale * 0.7f;
     }
 }

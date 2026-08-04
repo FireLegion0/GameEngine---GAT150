@@ -15,16 +15,6 @@ public:
         m_health{ bossDesc.health }
     {
     }
-    Boss(float speed, const nu::Transform& transform) :
-        Actor{ transform },
-        m_speed{ speed }
-    {
-    }
-    Boss(float speed, const nu::Transform& transform, const nu::Model& model) :
-        Actor{ transform, model },
-        m_speed{ speed }
-    {
-    }
 
     void Update(float dt) override;
     void OnCollision(Actor* other) override;
