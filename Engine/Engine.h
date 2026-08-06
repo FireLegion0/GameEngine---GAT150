@@ -5,6 +5,8 @@
 #include "Vector3.h"
 #include "MathUtils.h"
 #include "Transform.h"
+#include "ResourceManager.h"
+#include "Resource.h"
 #include "Text.h"
 #include "Font.h"
 

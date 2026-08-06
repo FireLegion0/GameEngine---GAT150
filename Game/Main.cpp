@@ -18,12 +18,14 @@
 #include "../Engine/Scene.h"
 #include <map>
 #include <memory>
+#include <random>
 
 #define TEXT "Hello!\n"
 #define MAX(a, b) ((a > b) ? a : b)
 
 using namespace nu;
 
+/*
 class Object {
 public:
     Object() { std::cout << "Constructor\n"; }
@@ -33,60 +35,53 @@ public:
 	Object& operator = (const Object& object) { std::cout << "Assignment\n"; return *this; }
 };
 
+uint32_t seed = 1234;
+
+uint32_t RNG() {
+	seed = (seed * 1103515245 + 12345) ;
+    return seed;
+}
+*/
+
 int main() {
 
-    std::cout << "======object test======\n";
-    {
-        Object objectA;
-		Object objectB(objectA);
-        Object objectC;
-		objectC = objectA;
+    /*
+    for (size_t i = 0; i < 10; ++i) {
+        std::cout << RNG() << " ";
     }
+	std::cout << std::endl;
 
-    std::cout << "\n======raw pointers======\n";
-    {
-		Object* objectA = new Object();
-		std::cout << objectA << std::endl;
-
-		Object* objectB = new Object(*objectA);
-		std::cout << objectB << std::endl;
-
-		Object* objectC = nullptr;
-        objectC = objectA;
-		std::cout << objectC << std::endl;
-
-        delete objectA;
-		delete objectB;
-        //delete objectC;
+	seed = 1234;
+    for (size_t i = 0; i < 10; ++i) {
+        std::cout << RNG() << " ";
     }
+	std::cout << std::endl;
 
-	std::cout << "\n======smart pointers======\n";
-	{
-		std::unique_ptr<Object> objectA = std::make_unique<Object>();
-		std::cout << objectA.get() << std::endl;
+	nu::SeedRandom((unsigned int)time(NULL));
+    for (size_t i = 0; i < 10; ++i) {
+        std::cout << rand() << " ";
+    }
+	std::cout << std::endl;
 
-		std::unique_ptr<Object> objectB;
-        objectB = std::move(objectA);
-		std::cout << objectA.get() << std::endl;
-		std::cout << objectB.get() << std::endl;
+    std::random_device randDev;
+	std::cout << randDev.min() << std::endl;
+	std::cout << randDev.max() << std::endl;
+	std::cout << randDev.entropy() << std::endl;
 
-        objectB.reset();
-	}
+    std::mt19937 randGen(randDev());
 
-	std::cout << "\n======shared pointers======\n";
-	std::shared_ptr<Object> objectC;
-	{
-		auto objectA = std::make_shared<Object>();
-		std::cout << objectA.get() << std::endl;
-		std::cout << objectA.use_count() << std::endl;
-		auto objectB = objectA;
-		std::cout << objectB.get() << std::endl;
-		std::cout << objectB.use_count() << std::endl;
-		objectC = objectA;
-		std::cout << objectC.get() << std::endl;
-		std::cout << objectC.use_count() << std::endl;
-	}
-	std::cout << objectC.use_count() << std::endl;
+	std::uniform_int_distribution<int> dist(0, 20);
+    for (size_t i = 0; i < 10; ++i) {
+		std::cout << dist(randGen) << " ";
+    }
+	std::cout << std::endl;
+
+	std::uniform_real_distribution<float> distF(-10.0f, 40.0f);
+    for (size_t i = 0; i < 10; ++i) {
+		std::cout << distF(randGen) << " ";
+    }
+	std::cout << std::endl;
+    */
 
     //return 0;
 
@@ -99,9 +94,6 @@ int main() {
     SpaceGame game;
     game.Initialize();
 
-    // create texture, using shared_ptr so texture can be shared
-    std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-    texture->Load("textures/kirby.jpg", Engine::Get().GetRenderer());
 
     std::vector<Vector2> points;
 
@@ -164,8 +156,6 @@ int main() {
 		
         game.Draw(Engine::Get().GetRenderer());
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
-
-        Engine::Get().GetRenderer().DrawTexture(*texture, 30, 30);
 
         Engine::Get().GetRenderer().Present(); // Render the screen
     }

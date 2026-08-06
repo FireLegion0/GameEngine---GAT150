@@ -37,7 +37,7 @@ namespace nu {
 		return true;
 	}
 
-	void Text::Draw(Renderer& renderer, float x, float y) {
+	void Text::Draw(const Renderer& renderer, float x, float y) {
 		// get the texture width and height
 		float width, height;
 		bool success = SDL_GetTextureSize(m_texture, &width, &height);

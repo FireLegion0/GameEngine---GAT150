@@ -5,6 +5,7 @@
 #include "Boss.h"
 #include "Astroid.h"
 #include "Assets.h"
+#include <memory>
 
 using namespace nu;
 
@@ -14,17 +15,11 @@ bool SpaceGame::Initialize() {
 	m_scene = new Scene();
 	m_scene->SetGame(this);
 
-	m_titleFont = new Font();
-	m_titleFont->Load("fonts/airstrike.ttf", 64);
-
-	m_titleText = new Text(m_titleFont);
+	m_titleText = new Text(Resources().GetWithID<Font>("title_font", "fonts/airstrike.ttf", 64.0f));
 	m_titleText->Create(Engine::Get().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });
 
-	m_gameFont = new Font();
-	m_gameFont->Load("fonts/airstrike.ttf", 32);
-
-	m_scoreText = new Text(m_gameFont);
-	m_livesText = new Text(m_gameFont);
+	m_scoreText = new Text(Resources().GetWithID<Font>("score_font", "fonts/airstrike.ttf", 32.0f));
+	m_livesText = new Text(Resources().GetWithID<Font>("lives_font", "fonts/airstrike.ttf", 32.0f));
 
 	Engine::Get().GetAudio().AddSound("shoot", "Audio/laser.wav");
 	Engine::Get().GetAudio().AddSound("explode", "Audio/Explosion_Debris.wav");
@@ -79,6 +74,8 @@ void SpaceGame::Update(float dt) {
 }
 
 void SpaceGame::Draw(Renderer& renderer) {
+	renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/background.jpg", Engine::Get().GetRenderer()), 500, 500);
+
 	switch (m_gamestate) {
 	case GameState::Title:
 		m_titleText->Draw(renderer, 400, 400);
@@ -117,8 +114,9 @@ void SpaceGame::OnPlayerDeath() {
 void SpaceGame::SpawnPlayer() {
 	PlayerDesc playerDesc;
 	playerDesc.name = "Player";
-	playerDesc.model = assets::playerModel;
-	playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 15.0f };
+	//playerDesc.model = assets::playerModel;
+	playerDesc.texture = Resources().Get<Texture>("textures/player.png", Engine::Get().GetRenderer());
+	playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 1.0f };
 	playerDesc.velocity = Vector2{ 0.0f, 0.0f };
 	playerDesc.damping = 3.0f;
 	playerDesc.speed = 2000.0f;
@@ -131,8 +129,9 @@ void SpaceGame::SpawnEnemy() {
 	EnemyDesc enemyDesc;
 	enemyDesc.name = "Enemy";
 	enemyDesc.tag = "Enemy";
-	enemyDesc.model = assets::enemyModel;
-	enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 10.0f };
+	//enemyDesc.model = assets::enemyModel;
+	enemyDesc.texture = Resources().Get<Texture>("textures/enemy.png", Engine::Get().GetRenderer());
+	enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 0.5f };
 	enemyDesc.damping = 3.0f;
 	enemyDesc.speed = RandomFloat(100.0f, 2000.0f);
 
@@ -144,8 +143,9 @@ void SpaceGame::SpawnAstroid() {
 	AstroidDesc astroidDesc;
 	astroidDesc.tag = "Astroid";
 	astroidDesc.name = "Astroid";
-	astroidDesc.model = assets::astroidModel;
-	astroidDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 10.0f };
+	//astroidDesc.model = assets::astroidModel;
+	astroidDesc.texture = Resources().Get<Texture>("textures/astroid.png", Engine::Get().GetRenderer());
+	astroidDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 0.25f };
 	astroidDesc.damping = 3.0f;
 	astroidDesc.speed = RandomFloat(100.0f, 2000.0f);
 
@@ -158,8 +158,9 @@ void SpaceGame::SpawnBoss() {
 	bossDesc.name = "Boss";
 	bossDesc.tag = "Enemy";
 	bossDesc.health = 3;
-	bossDesc.model = assets::bossModel;
-	bossDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 10.0f };
+	//bossDesc.model = assets::bossModel;
+	bossDesc.texture = Resources().Get<Texture>("textures/boss.png", Engine::Get().GetRenderer());
+	bossDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 2.0f };
 	bossDesc.damping = 3.0f;
 	bossDesc.speed = RandomFloat(100.0f, 2000.0f);
 

@@ -28,7 +28,7 @@ namespace nu {
 			void DrawLine(float x1, float y1, float x2, float y2) const;
 
 			void DrawModel(const class Model& model, const struct Transform& transform) const;
-			void DrawTexture(class Texture& texture, float x, float y) const;
+			void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false) const;
 
 			int GetWidth() const { return m_width; }
 			int GetHeight() const { return m_height; }
@@ -37,8 +37,8 @@ namespace nu {
 			friend class Texture;
 
 	private:
-		SDL_Window* m_window;
-		SDL_Renderer* m_renderer;
+		SDL_Window* m_window = nullptr;
+		SDL_Renderer* m_renderer = nullptr;
 
 		int m_width{ 0 };
 		int m_height{ 0 };

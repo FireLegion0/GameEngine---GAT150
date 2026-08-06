@@ -5,20 +5,16 @@
 #include <SDL3_image/SDL_image.h>
 #include <iostream>
 
-namespace nu
-{
-    Texture::~Texture()
-    {
+namespace nu {
+    Texture::~Texture() {
         // if texture exists, destroy texture
         if (m_texture) SDL_DestroyTexture(m_texture);
     }
 
-    bool Texture::Load(const std::string& filename, Renderer& renderer)
-    {
+    bool Texture::Load(const std::string& filename, Renderer& renderer) {
         // load image onto surface
         SDL_Surface* surface = IMG_Load(filename.c_str());
-        if (!surface)
-        {
+        if (!surface) {
             std::cerr << "Could not load image: " << filename << std::endl;
             return false;
         }
@@ -27,20 +23,20 @@ namespace nu
         m_texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
         // once texture is created, surface can be freed up
         SDL_DestroySurface(surface);
-        if (!m_texture)
-        {
+        if (!m_texture) {
             std::cerr << "Could not create texture: " << filename << std::endl;
             return false;
         }
+        
+        SDL_GetTextureSize(m_texture, &m_size.x, &m_size.y);
 
         return true;
     }
 
-    nu::Vector2 Texture::GetSize()
-    {
-        nu::Vector2 v;
+    //const nu::Vector2& Texture::GetSize() const {
+    //    nu::Vector2 v;
         // https://wiki.libsdl.org/SDL3/SDL_GetTextureSize
-        SDL_GetTextureSize(m_texture, &v.x, &v.y);
-        return v;
-    }
+    //    SDL_GetTextureSize(m_texture, &v.x, &v.y);
+    //    return v;
+    //}
 }
