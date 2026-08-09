@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Particle.h"
 #include "Renderer.h"
+#include "Engine.h"
+#include "Texture.h"
 
 namespace nu {
 	bool ParticleSystem::Initialize(size_t size)
@@ -26,11 +28,7 @@ namespace nu {
 
 			// reduce particle.lifespan by subtracting delta time
 			particle.lifespan -= dt;
-			// set active if (particle.lifespan > 0);
-			// TODO: particle.active = particle lifespan > 0
 			particle.active = particle.lifespan > 0;
-			// update position with velocity (multiply by dt)
-			// TODO: update position += with particle velocity * delta time
 			particle.position += (particle.velocity * dt);
 		}
 	}
@@ -45,7 +43,9 @@ namespace nu {
 				// TODO: set color with particle color
 				renderer.SetColor(particle.color.r, particle.color.g, particle.color.b);
 				// TODO: draw point with particle position
-				renderer.DrawPoint(particle.position.x, particle.position.y);
+				//renderer.DrawPoint(particle.position.x, particle.position.y);
+				res_t<Texture> particles = Resources().Get<Texture>("textures/flames.png", Engine::Get().GetRenderer());
+				renderer.DrawTexture(*particles, particle.position.x, particle.position.y, 0.0f, 0.0125f);
 			}
 		}
 	}
