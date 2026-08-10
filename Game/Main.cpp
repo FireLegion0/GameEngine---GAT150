@@ -19,74 +19,133 @@
 #include <map>
 #include <memory>
 #include <random>
+#include <fstream>
 
 #define TEXT "Hello!\n"
 #define MAX(a, b) ((a > b) ? a : b)
 
 using namespace nu;
 
-/*
-class Object {
-public:
-    Object() { std::cout << "Constructor\n"; }
-    ~Object() { std::cout << "Destructor\n"; }
-
-	Object(const Object& object) { std::cout << "Copy\n"; }
-	Object& operator = (const Object& object) { std::cout << "Assignment\n"; return *this; }
-};
-
-uint32_t seed = 1234;
-
-uint32_t RNG() {
-	seed = (seed * 1103515245 + 12345) ;
-    return seed;
-}
-*/
-
 int main() {
-
-    /*
-    for (size_t i = 0; i < 10; ++i) {
-        std::cout << RNG() << " ";
-    }
-	std::cout << std::endl;
-
-	seed = 1234;
-    for (size_t i = 0; i < 10; ++i) {
-        std::cout << RNG() << " ";
-    }
-	std::cout << std::endl;
-
-	nu::SeedRandom((unsigned int)time(NULL));
-    for (size_t i = 0; i < 10; ++i) {
-        std::cout << rand() << " ";
-    }
-	std::cout << std::endl;
-
-    std::random_device randDev;
-	std::cout << randDev.min() << std::endl;
-	std::cout << randDev.max() << std::endl;
-	std::cout << randDev.entropy() << std::endl;
-
-    std::mt19937 randGen(randDev());
-
-	std::uniform_int_distribution<int> dist(0, 20);
-    for (size_t i = 0; i < 10; ++i) {
-		std::cout << dist(randGen) << " ";
-    }
-	std::cout << std::endl;
-
-	std::uniform_real_distribution<float> distF(-10.0f, 40.0f);
-    for (size_t i = 0; i < 10; ++i) {
-		std::cout << distF(randGen) << " ";
-    }
-	std::cout << std::endl;
-    */
-
-    //return 0;
 
     // create audio system
     nu::SetWorkingDirectory("assets");
+
+    // load the json data from a file
+    std::string buffer;
+    if (ReadTextFile("data/data.json", buffer))
+    {
+        // show the contents of the json file (debug)
+        std::cout << buffer << std::endl;
+
+        // create json document from the json file contents
+        rapidjson::Document document;
+        if (json::Load("data/data.json", document))
+        {
+            // read the age data (int) from the json
+            std::string name;
+            int age;
+            float speed;
+            bool isAwake;
+            nu::Vector2 position;
+            nu::Vector3 color;
+            JSON_READ(document, name);
+            JSON_READ(document, age);
+            JSON_READ(document, speed);
+            JSON_READ(document, isAwake);
+            JSON_READ(document, position);
+            JSON_READ(document, color);
+
+            // show the age data
+            std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
+            std::cout << position.x << " " << position.y << std::endl;
+            std::cout << color.r << " " << color.g << " " << color.b << " " << std::endl;
+        }
+    }
+
+    /*
+    {
+        //read file (input file)
+		std::ifstream file("data/game.txt");
+        if (file.is_open()) {
+            std::string str;
+			while (std::getline(file, str)) {
+				std::cout << str << std::endl;
+			}
+        }
+        else {
+			std::cout << "Failed to open file: data/game.txt" << std::endl;
+        }
+    }
+
+    {
+		//write file (output file)
+        std::ofstream file("data/game.txt", std::ios::app);
+        if (file.is_open()) {
+			file << "\nHave a wonderful day!\n";
+        }
+    }
+    
+    {
+		//read/write (input/output file)
+        std::fstream file("data/game.txt", std::ios::in | std::ios::out | std::ios::app);
+        if (file.is_open()) {
+            //input
+            file << "I exist\n";
+            file.seekg(0);
+			//output
+			std::string str;
+            while (std::getline(file, str)) {
+                std::cout << str << std::endl;
+            }
+        }
+    }
+
+    //save game data
+    {
+        std::string name;
+        int score;
+        bool livin;
+
+        bool save = false;
+        if (save) {
+			name = "Eddie";
+			score = 10000;
+			livin = true;
+
+            //save game data
+			std::ofstream file("data/saveGame.txt", std::ios::trunc);
+            if (file.is_open()) {
+				file << name << std::endl;
+				file << score << std::endl;
+				file << std::boolalpha << livin << std::endl;
+            }
+        }
+
+        //load game data
+		bool load = true;
+        if (load) {
+			std::ifstream file("data/saveGame.txt");
+            if (file.is_open()) {
+                std::getline(file, name);
+
+                std::string str;
+				std::getline(file, str);
+
+                score = std::stoi(str);
+
+                file >> std::boolalpha >> livin;
+            }
+
+
+        }
+
+		std::cout << name << " | " << score << " | " << std::boolalpha << livin << std::endl;
+
+    }
+    */
+
+    return 0;
 
 	//INITIALIZATION
     Engine::Get().Initialize();
@@ -149,10 +208,10 @@ int main() {
         Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
         Engine::Get().GetRenderer().Clear();
 
-        for (int i = 0; i < (int)points.size() - 1; i++) {
-            Engine::Get().GetRenderer().SetColor(0.5f, 0.5f, 0.5f); // Set render draw color to green
-            Engine::Get().GetRenderer().DrawLine(points[i].x, points[i].y, points[i+1].x, points[i+1].y); // Render a random point
-        }
+        //for (int i = 0; i < (int)points.size() - 1; i++) {
+        //    Engine::Get().GetRenderer().SetColor(0.5f, 0.5f, 0.5f); // Set render draw color to green
+        //    Engine::Get().GetRenderer().DrawLine(points[i].x, points[i].y, points[i+1].x, points[i+1].y); // Render a random point
+        //}
 		
         game.Draw(Engine::Get().GetRenderer());
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());

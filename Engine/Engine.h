@@ -16,6 +16,7 @@
 #include "Particle.h"
 #include "Audio.h"
 #include "Texture.h"
+#include "Json.h"
 
 #include "Actor.h"
 #include "Scene.h"
