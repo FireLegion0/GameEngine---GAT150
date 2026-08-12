@@ -17,6 +17,10 @@ public:
     //void Draw(const class nu::Renderer& renderer) const override;
     void OnCollision(Actor* other);
 
+    float GetSpeed() const { return m_speed; }
+
+    void Read(const nu::json::value_t& value) override;
+
 private:
 	int m_ammo = 0;
     float m_speed = 400.0f;

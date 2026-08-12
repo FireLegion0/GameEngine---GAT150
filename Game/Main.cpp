@@ -26,10 +26,80 @@
 
 using namespace nu;
 
+class Animal {
+public:
+    virtual void Speak() {
+		std::cout << "E" << std::endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void Speak() override {
+		std::cout << "Meow" << std::endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void Speak() override {
+		std::cout << "Woof" << std::endl;
+    }
+};
+
+class Bird : public Animal {
+public:
+    void Speak() override {
+		std::cout << "Tweet" << std::endl;
+    }
+};
+
+Animal* AnimalFactory(const std::string& id) {
+    Animal* animal = nullptr;
+
+	if (nu::EqualsIgnoreCase(id, "Cat")) {
+		animal = new Cat();
+	}
+	else if (nu::EqualsIgnoreCase(id, "Dog")) {
+		animal = new Dog();
+	}
+	else if (nu::EqualsIgnoreCase(id, "Bird")) {
+		animal = new Bird();
+	}
+
+    return animal;
+}
+
+std::map<std::string, std::unique_ptr<ICreator>> registry;
+
 int main() {
+	nu::SetWorkingDirectory("assets"); //Keep this at the top of main() to ensure the working directory is set before any assets are loaded
+
+	Factory::Instance().Register<Actor>("Actor");
+	Factory::Instance().Register<Object>("Object");
+	Factory::Instance().Register<Player>("Player");
+
+	auto actor = Factory::Instance().Create<Actor>("Actor");
+	std::cout << actor->IsActive() << std::endl;
+
+	auto object = Factory::Instance().Create("Object");
+	std::cout << object->IsActive() << std::endl;
+
+    auto player = Factory::Instance().Create<Player>("Player");
+
+	json::document_t document;
+    if (json::Load("data/scene.json", document)) {
+		player->Read(document);
+		std::cout << player->GetName() << std::endl;
+		std::cout << player->GetTag() << std::endl;
+
+        std::cout << player->GetTransform().rotation << std::endl;
+        std::cout << player->GetSpeed() << std::endl;
+    }
+
+    return 0;
 
     // create audio system
-    nu::SetWorkingDirectory("assets");
 
     // load the json data from a file
     std::string buffer;
@@ -63,89 +133,6 @@ int main() {
         }
     }
 
-    /*
-    {
-        //read file (input file)
-		std::ifstream file("data/game.txt");
-        if (file.is_open()) {
-            std::string str;
-			while (std::getline(file, str)) {
-				std::cout << str << std::endl;
-			}
-        }
-        else {
-			std::cout << "Failed to open file: data/game.txt" << std::endl;
-        }
-    }
-
-    {
-		//write file (output file)
-        std::ofstream file("data/game.txt", std::ios::app);
-        if (file.is_open()) {
-			file << "\nHave a wonderful day!\n";
-        }
-    }
-    
-    {
-		//read/write (input/output file)
-        std::fstream file("data/game.txt", std::ios::in | std::ios::out | std::ios::app);
-        if (file.is_open()) {
-            //input
-            file << "I exist\n";
-            file.seekg(0);
-			//output
-			std::string str;
-            while (std::getline(file, str)) {
-                std::cout << str << std::endl;
-            }
-        }
-    }
-
-    //save game data
-    {
-        std::string name;
-        int score;
-        bool livin;
-
-        bool save = false;
-        if (save) {
-			name = "Eddie";
-			score = 10000;
-			livin = true;
-
-            //save game data
-			std::ofstream file("data/saveGame.txt", std::ios::trunc);
-            if (file.is_open()) {
-				file << name << std::endl;
-				file << score << std::endl;
-				file << std::boolalpha << livin << std::endl;
-            }
-        }
-
-        //load game data
-		bool load = true;
-        if (load) {
-			std::ifstream file("data/saveGame.txt");
-            if (file.is_open()) {
-                std::getline(file, name);
-
-                std::string str;
-				std::getline(file, str);
-
-                score = std::stoi(str);
-
-                file >> std::boolalpha >> livin;
-            }
-
-
-        }
-
-		std::cout << name << " | " << score << " | " << std::boolalpha << livin << std::endl;
-
-    }
-    */
-
-    return 0;
 
 	//INITIALIZATION
     Engine::Get().Initialize();

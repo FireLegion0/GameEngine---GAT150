@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "MathUtils.h"
+#include "StringUtils.h"
 #include "Transform.h"
 #include "ResourceManager.h"
 #include "Resource.h"
@@ -17,6 +18,7 @@
 #include "Audio.h"
 #include "Texture.h"
 #include "Json.h"
+#include "Factory.h"
 
 #include "Actor.h"
 #include "Scene.h"
