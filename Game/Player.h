@@ -13,6 +13,8 @@ public:
         m_speed{ playerDesc.speed }
     {}
 
+    CLASS_PROTO(Player)
+
     void Update(float dt) override;
     //void Draw(const class nu::Renderer& renderer) const override;
     void OnCollision(Actor* other);

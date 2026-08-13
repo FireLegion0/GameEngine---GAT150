@@ -9,6 +9,9 @@
 #include "../Engine/Font.h"
 #include "../Engine/Text.h"
 #include "SpaceGame.h"
+#include "Bullet.h"
+#include "Boss.h"
+#include "Astroid.h"
 
 #include <fmod.hpp>
 
@@ -78,7 +81,12 @@ int main() {
 	Factory::Instance().Register<Actor>("Actor");
 	Factory::Instance().Register<Object>("Object");
 	Factory::Instance().Register<Player>("Player");
+	Factory::Instance().Register<Enemy>("Enemy");
+    Factory::Instance().Register<Bullet>("Bullet");
+    Factory::Instance().Register<Boss>("Boss");
+    Factory::Instance().Register<Astroid>("Astroid");
 
+    /*
 	auto actor = Factory::Instance().Create<Actor>("Actor");
 	std::cout << actor->IsActive() << std::endl;
 
@@ -98,40 +106,12 @@ int main() {
     }
 
     return 0;
+    */
 
     // create audio system
 
     // load the json data from a file
     std::string buffer;
-    if (ReadTextFile("data/data.json", buffer))
-    {
-        // show the contents of the json file (debug)
-        std::cout << buffer << std::endl;
-
-        // create json document from the json file contents
-        rapidjson::Document document;
-        if (json::Load("data/data.json", document))
-        {
-            // read the age data (int) from the json
-            std::string name;
-            int age;
-            float speed;
-            bool isAwake;
-            nu::Vector2 position;
-            nu::Vector3 color;
-            JSON_READ(document, name);
-            JSON_READ(document, age);
-            JSON_READ(document, speed);
-            JSON_READ(document, isAwake);
-            JSON_READ(document, position);
-            JSON_READ(document, color);
-
-            // show the age data
-            std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
-            std::cout << position.x << " " << position.y << std::endl;
-            std::cout << color.r << " " << color.g << " " << color.b << " " << std::endl;
-        }
-    }
 
 
 	//INITIALIZATION

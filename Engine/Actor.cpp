@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "MathUtils.h"
+#include "Engine.h"
 
 namespace nu {
 	void Actor::Update(float dt) {
@@ -48,6 +49,12 @@ namespace nu {
 
         if (JSON_HAS_NAME(value, "transform")) {
             m_transform.Read(JSON_GET_NAME(value, "transform"));
+        }
+
+        std::string textureName;
+        JSON_READ_NAME(value, "texture", textureName);
+        if (!textureName.empty()) {
+            m_texture = Resources().Get<Texture>(textureName, Engine::Get().GetRenderer());
         }
 
         JSON_READ_NAME(value, "tag", m_tag);

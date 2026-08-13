@@ -13,6 +13,8 @@ namespace nu {
 		void AddActor(std::unique_ptr<Actor> actor);
 		void RemvoeAllActors();
 
+		bool Load(const std::string& sceneName);
+
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 

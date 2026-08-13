@@ -14,8 +14,12 @@ public:
     {
     }
 
+    CLASS_PROTO(Bullet)
+
     void Update(float dt) override;
-    //void Draw(const class nu::Renderer& renderer) const override;
+
+    void Read(const nu::json::value_t& value) override;
+
 private:
     int m_ammo = 0;
     float m_speed = 0.0f;

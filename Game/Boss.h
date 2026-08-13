@@ -16,9 +16,13 @@ public:
     {
     }
 
+    CLASS_PROTO(Boss)
+
     void Update(float dt) override;
     void OnCollision(Actor* other) override;
-    //void Draw(const class nu::Renderer& renderer) const override;
+
+    void Read(const nu::json::value_t& value) override;
+
 private:
     int m_ammo = 0;
     int m_health = 3;

@@ -14,8 +14,13 @@ public:
     {
     }
 
+    CLASS_PROTO(Astroid)
+
     void Update(float dt) override;
     void OnCollision(Actor* other) override;
+
+    void Read(const nu::json::value_t& value) override;
+
 private:
     float m_speed = 100.0f;
 };

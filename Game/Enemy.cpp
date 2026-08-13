@@ -7,7 +7,7 @@
 #include <iostream>
 
 void Enemy::Update(float dt) {
-	Player* player = m_scene->GetActorByName<Player>("Player");
+	Player* player = m_scene->GetActorByName<Player>("PlayerProto");
 	if (player) {
 		nu::Vector2 direction = player->GetTransform().position - m_transform.position;
 		float rotation = direction.Angle();
@@ -53,4 +53,10 @@ void Enemy::OnCollision(Actor* other) {
 			nu::Engine::Get().GetPS().AddParticle(particle);
 		}
 	}
+}
+
+void Enemy::Read(const nu::json::value_t& value) {
+	Actor::Read(value);
+
+	JSON_READ_NAME(value, "speed", m_speed);
 }

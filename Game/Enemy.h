@@ -13,9 +13,13 @@ public:
         m_speed{ enemyDesc.speed }
     { }
 
+    CLASS_PROTO(Enemy)
+
     void Update(float dt) override;
     void OnCollision(Actor* other) override;
-    //void Draw(const class nu::Renderer& renderer) const override;
+
+    void Read(const nu::json::value_t& value) override;
+
 private:
     int m_ammo = 0;
     float m_speed = 400.0f;

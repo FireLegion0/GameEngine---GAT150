@@ -14,6 +14,7 @@ bool SpaceGame::Initialize() {
 
 	m_scene = new Scene();
 	m_scene->SetGame(this);
+	m_scene->Load("data/scene.json");
 
 	m_titleText = new Text(Resources().GetWithID<Font>("title_font", "fonts/airstrike.ttf", 64.0f));
 	m_titleText->Create(Engine::Get().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });
@@ -112,58 +113,24 @@ void SpaceGame::OnPlayerDeath() {
 }
 
 void SpaceGame::SpawnPlayer() {
-	PlayerDesc playerDesc;
-	playerDesc.name = "Player";
-	//playerDesc.model = assets::playerModel;
-	playerDesc.texture = Resources().Get<Texture>("textures/player.png", Engine::Get().GetRenderer());
-	playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 1.0f };
-	playerDesc.velocity = Vector2{ 0.0f, 0.0f };
-	playerDesc.damping = 3.0f;
-	playerDesc.speed = 2000.0f;
-
-	std::unique_ptr<Player> player = std::make_unique<Player>( playerDesc );
-	m_scene->AddActor(std::move(player));
+	auto actor = Factory::Instance().Create<Actor>("PlayerProto");
+	m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnEnemy() {
-	EnemyDesc enemyDesc;
-	enemyDesc.name = "Enemy";
-	enemyDesc.tag = "Enemy";
-	//enemyDesc.model = assets::enemyModel;
-	enemyDesc.texture = Resources().Get<Texture>("textures/enemy.png", Engine::Get().GetRenderer());
-	enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 0.5f };
-	enemyDesc.damping = 3.0f;
-	enemyDesc.speed = RandomFloat(100.0f, 2000.0f);
-
-	//std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemyDesc);
-	m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
+	auto actor = Factory::Instance().Create<Actor>("EnemyProto");
+	actor->SetPosition({nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f)});
+	m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnAstroid() {
-	AstroidDesc astroidDesc;
-	astroidDesc.tag = "Astroid";
-	astroidDesc.name = "Astroid";
-	//astroidDesc.model = assets::astroidModel;
-	astroidDesc.texture = Resources().Get<Texture>("textures/astroid.png", Engine::Get().GetRenderer());
-	astroidDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 0.25f };
-	astroidDesc.damping = 3.0f;
-	astroidDesc.speed = RandomFloat(100.0f, 2000.0f);
-
-	//Astroid* astroid = new Astroid{ astroidDesc };
-	m_scene->AddActor(std::move(std::make_unique<Astroid>(astroidDesc)));
+	auto actor = Factory::Instance().Create<Actor>("AstroidProto");
+	actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+	m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnBoss() {
-	BossDesc bossDesc;
-	bossDesc.name = "Boss";
-	bossDesc.tag = "Enemy";
-	bossDesc.health = 3;
-	//bossDesc.model = assets::bossModel;
-	bossDesc.texture = Resources().Get<Texture>("textures/boss.png", Engine::Get().GetRenderer());
-	bossDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 2.0f };
-	bossDesc.damping = 3.0f;
-	bossDesc.speed = RandomFloat(100.0f, 2000.0f);
-
-	Boss* boss = new Boss{ bossDesc };
-	m_scene->AddActor(std::move(std::make_unique<Boss>(bossDesc)));
+	auto actor = Factory::Instance().Create<Actor>("BossProto");
+	actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+	m_scene->AddActor(std::move(actor));
 }
