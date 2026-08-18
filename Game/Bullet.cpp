@@ -1,5 +1,8 @@
 #include "Bullet.h"
 #include "..\Engine\MathUtils.h"
+#include "..\Engine\Factory.h"
+
+FACTORY_REGISTER(Bullet)
 
 void Bullet::Update(float dt) {
 	nu::Vector2 forward{ 1.0f, 0.0f };

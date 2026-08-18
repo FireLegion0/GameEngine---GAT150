@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+FACTORY_REGISTER(Boss)
+
 void Boss::Update(float dt) {
 	Player* player = m_scene->GetActorByName<Player>("Player");
 	if (player) {

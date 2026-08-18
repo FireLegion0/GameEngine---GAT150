@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+FACTORY_REGISTER(Astroid)
+
 void Astroid::Update(float dt) {
 	Actor::Update(dt);
 }

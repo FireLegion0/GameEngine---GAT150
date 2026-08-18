@@ -8,6 +8,8 @@
 
 using namespace nu;
 
+FACTORY_REGISTER(Player)
+
 void Player::Update(float dt) {
 	float thrust = 0.0f;
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = m_speed;
@@ -40,6 +42,14 @@ void Player::Update(float dt) {
 
 		nu::Engine::Get().GetAudio().PlaySound("shoot"); //For Later
 
+		auto bullet = nu::Factory::Instance().Create<Bullet>("BulletProto");
+		bullet->SetTransform(m_transform);
+		bullet->SetScale(1.25f);
+		bullet->SetTag("PlayBullet");
+
+		m_scene->AddActor(std::move(bullet));
+
+		/*
 		BulletDesc desc;
 		desc.name = "Bullet";
 		desc.tag = "PlayBullet";
@@ -68,6 +78,7 @@ void Player::Update(float dt) {
 			desc.transform.rotation -= 20.0f;
 			//bullet = new Bullet{ desc };
 			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
+		*/
 	}
 
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_X)) {
