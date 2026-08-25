@@ -1,7 +1,7 @@
 #include "Boss.h"
 #include "Player.h"
-#include "../Engine/Renderer.h"
-#include "../Engine/Engine.h"
+#include "Renderer/Renderer.h"
+#include "Engine.h"
 #include "SpaceGame.h"
 
 #include <iostream>

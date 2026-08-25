@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\Engine\Model.h"
+#include "Renderer/Model.h"
 #include <memory>
 
 namespace assets {

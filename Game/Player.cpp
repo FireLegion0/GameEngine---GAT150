@@ -1,9 +1,9 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Assets.h"
-#include "../Engine/Texture.h"
-#include "../Engine/Renderer.h"
-#include "../Engine/Engine.h"
+#include "Renderer/Texture.h"
+#include "Renderer/Renderer.h"
+#include "Engine.h"
 #include "SpaceGame.h"
 
 using namespace nu;

@@ -1,6 +1,6 @@
 #include "Bullet.h"
-#include "..\Engine\MathUtils.h"
-#include "..\Engine\Factory.h"
+#include "Math/MathUtils.h"
+#include "Core/Factory.h"
 
 FACTORY_REGISTER(Bullet)
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "Framework/Object.h"
 
 namespace nu {
 	class Actor;

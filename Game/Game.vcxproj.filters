@@ -67,5 +67,8 @@
     <None Include="..\Build\Assets\Data\scene.json">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Build\Assets\Animations\bat_idle.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

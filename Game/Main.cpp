@@ -1,13 +1,13 @@
 // Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "../Engine/Engine.h"
+#include "Engine.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Assets.h"
-#include "../Engine/File.h"
-#include "../Engine/Font.h"
-#include "../Engine/Text.h"
+#include "Core/File.h"
+#include "Renderer/Font.h"
+#include "Renderer/Text.h"
 #include "SpaceGame.h"
 #include "Bullet.h"
 #include "Boss.h"
@@ -18,7 +18,7 @@
 #include <iostream>
 #include <vector>
 #include "SDL3/SDL.h"
-#include "../Engine/Scene.h"
+#include "Framework/Scene.h"
 #include <map>
 #include <memory>
 #include <random>
