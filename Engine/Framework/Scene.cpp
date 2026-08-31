@@ -10,8 +10,8 @@ namespace nu {
 		m_pendingActors.push_back(std::move(actor));
 	}
 
-	void Scene::RemvoeAllActors() {
-		m_actors.clear();
+	void Scene::RemvoeAllActors(bool force) {
+		std::erase_if(m_actors, [force](auto& actor) { return !actor->GetPersist() || force; });
 	}
 
 	bool Scene::Load(const std::string& sceneName) {
@@ -48,11 +48,17 @@ namespace nu {
 			actor->Update(dt);
 		}
 
-		UpdateCollisions();
+		//UpdateCollisions();
 
+		for (auto& actor : m_actors) {
+			if (actor->m_destroyed) {
+				actor->OnDestroy();
+			}
+		}
 		std::erase_if(m_actors, [](auto& actor) { return actor->m_destroyed; });
 
 		for (auto& actor : m_pendingActors) {
+			actor->Start();
 			m_actors.push_back(std::move(actor));
 		}
 		m_pendingActors.clear();
@@ -67,21 +73,21 @@ namespace nu {
 		}
 	}
 
-	void Scene::UpdateCollisions() {
-		for (auto& actorA : m_actors) {
-			for (auto& actorB : m_actors) {
-				if (actorA == actorB || actorA->m_destroyed || actorB->m_destroyed) continue;
+	//void Scene::UpdateCollisions() {
+	//	for (auto& actorA : m_actors) {
+	//		for (auto& actorB : m_actors) {
+	//			if (actorA == actorB || actorA->m_destroyed || actorB->m_destroyed) continue;
 
-				auto colliderA = actorA->GetComponent<ColliderComponent>();
-				auto colliderB = actorB->GetComponent<ColliderComponent>();
+	//			auto colliderA = actorA->GetComponent<ColliderComponent>();
+	//			auto colliderB = actorB->GetComponent<ColliderComponent>();
 
-				if (!colliderA || !colliderB) continue;
+	//			if (!colliderA || !colliderB) continue;
 
-				if (colliderA->CheckCol(*colliderB)) {
-					actorA->OnCollision(actorB.get());
-					actorB->OnCollision(actorA.get());
-				}
-			}
-		}
-	}
+	//			if (colliderA->CheckCol(*colliderB)) {
+	//				actorA->OnCollision(actorB.get());
+	//				actorB->OnCollision(actorA.get());
+	//			}
+	//		}
+	//	}
+	//}
 }

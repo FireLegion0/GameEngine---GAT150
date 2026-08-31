@@ -1,6 +1,7 @@
 #include "Boss.h"
 #include "Player.h"
 #include "Renderer/Renderer.h"
+#include "Components/PhysicsComponent.h"
 #include "Engine.h"
 #include "SpaceGame.h"
 
@@ -17,7 +18,7 @@ void Boss::Update(float dt) {
 
 		nu::Vector2 forward{ 1, 0 };
 		forward = forward.Rotate(m_transform.rotation * nu::DegToRad);
-		AddVelocity(forward * m_speed * dt);
+		//AddVelocity(forward * m_speed * dt);
 	}
 
 	nu::Particle particle;

@@ -10,6 +10,7 @@
 #include "Resources/Resource.h"
 #include "Renderer/Text.h"
 #include "Renderer/Font.h"
+#include "Physics/Physics.h"
 
 #include "Renderer/Renderer.h"
 #include "Input/Input.h"
@@ -41,6 +42,7 @@ namespace nu {
 		Time& GetTime() { return m_time; }
 		ParticleSystem& GetPS() { return m_particleSystem; }
 		Audio& GetAudio() { return m_audio; }
+		Physics& GetPhysics() { return m_physics; }
 
 		Engine(const Engine&) = delete;
 		Engine& operator = (const Engine&) = delete;
@@ -53,6 +55,7 @@ namespace nu {
 
 		Time m_time;
 		ParticleSystem m_particleSystem;
+		Physics m_physics;
 	};
 
 	extern Engine engine;

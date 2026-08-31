@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\TileMaps">
+      <UniqueIdentifier>{dc66afb6-70ad-4991-b547-01a8c82a787e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,6 +42,9 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -62,12 +68,24 @@
     <ClInclude Include="Boss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Build\Assets\Data\scene.json">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Build\Assets\Animations\bat_idle.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Build\Assets\TileMap\world.json">
+      <Filter>Resource Files\TileMaps</Filter>
+    </None>
+    <None Include="..\Build\Assets\Animations\Run.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Build\Assets\Animations\Goblin_Idle.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Renderer/Renderer.h"
+#include "Components/PhysicsComponent.h"
 #include "Engine.h"
 #include "SpaceGame.h"
 
@@ -15,9 +16,14 @@ void Enemy::Update(float dt) {
 		float rotation = direction.Angle();
 		SetRotation(rotation * nu::RadToDeg);
 
-		nu::Vector2 forward{ 1, 0 };
-		forward = forward.Rotate(m_transform.rotation * nu::DegToRad);
-		AddVelocity(forward * m_speed * dt);
+		nu::PhysicsComponent* physComp = GetComponent<nu::PhysicsComponent>();
+		if (physComp) {
+			nu::Vector2 forward{ 1, 0 };
+			nu::Vector2 force = forward.Rotate(m_transform.rotation * nu::DegToRad) * m_speed;
+
+			physComp->ApplyForce(force);
+			//physComp->ApplyTorque(rotate);
+		}
 	}
 
 	nu::Particle particle;

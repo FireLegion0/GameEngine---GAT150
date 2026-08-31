@@ -1,11 +1,12 @@
 {
   "actors": [
     {
-      "Name": "Bat",
       "type": "Actor",
       "proto": false,
+      "Name": "Bat",
       "tag": "Enemy",
       "active": true,
+      "persist": true,
       "transform": {
         "position": [ 200, 200 ],
         "rotation": 0,
@@ -13,10 +14,41 @@
       },
       "components": [
         {
-          "type": "SpriteAnimationRendererComponent",
-          "textureFrames": "Animations/bat_idle.json",
-          "fps": 10,
-          "loop": true
+          "type": "SpriteAnimatorRendererComponent",
+          "default_animation": "run",
+          "animations": [
+            {
+              "name": "run",
+              "textureFrames": "animations/run.json",
+              "fps": 10,
+              "loop": true
+            },
+            {
+              "name": "idle",
+              "textureFrames": "animations/goblin_idle.json",
+              "fps": 10,
+              "loop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "proto": false,
+      "Name": "Tilemap",
+      "tag": "Ground",
+      "active": true,
+      "persist": true,
+      "transform": {
+        "position": [ 0, 0 ],
+        "rotation": 0,
+        "scale": 5
+      },
+      "components": [
+        {
+          "type": "TilemapRendererComponent",
+          "tilemap_name": "tilemap/world.json"
         }
       ]
     },
@@ -39,8 +71,12 @@
           "texture": "textures/player.png"
         },
         {
-          "type": "CircleColliderComponent",
-          "radius": 64
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 2.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0,
+          "is_sensor": true
         }
       ]
     },
@@ -64,8 +100,11 @@
           "texture": "textures/enemy.png"
         },
         {
-          "type": "CircleColliderComponent",
-          "radius": 32
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 1.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0
         }
       ]
     },
@@ -90,8 +129,11 @@
           "texture": "textures/bullet.png"
         },
         {
-          "type": "CircleColliderComponent",
-          "radius": 16
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 2.0,
+          "angular_damping": 1.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0
         }
       ]
     },
@@ -113,10 +155,6 @@
         {
           "type": "SpriteRendererComponent",
           "texture": "textures/astroid.png"
-        },
-        {
-          "type": "CircleColliderComponent",
-          "radius": 128
         }
       ]
     },
@@ -139,10 +177,6 @@
         {
           "type": "SpriteRendererComponent",
           "texture": "textures/boss.png"
-        },
-        {
-          "type": "CircleColliderComponent",
-          "radius": 96
         }
       ]
     }

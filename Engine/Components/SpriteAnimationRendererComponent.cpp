@@ -2,10 +2,29 @@
 #include "SpriteAnimationRendererComponent.h"
 #include "Renderer/TextureFrames.h"
 #include "Math/MathUtils.h"
+#include "Math/Transform.h"
+#include "Framework/Actor.h"
 #include "Engine.h"
 
 namespace nu {
 	FACTORY_REGISTER(SpriteAnimationRendererComponent)
+
+
+
+	void SpriteAnimationRendererComponent::Start(){
+		if (!m_textureFramesName.empty()) {
+			m_textureFrames = Resources().Get<TextureFrames>(m_textureFramesName, Engine::Get().GetRenderer());
+			if (m_textureFrames) {
+				m_sourceRect = m_textureFrames->GetFrameRect(0);
+				m_size = Vector2{ m_sourceRect.w, m_sourceRect.h };
+				m_texture = m_textureFrames->GetTexture();
+			}
+			if (!m_textureFrames) {
+				std::cerr << "Texture Frames Not Loaded." << m_textureFramesName << " (Read)" << std::endl;
+				return;
+			}
+		}
+	}
 
 	void SpriteAnimationRendererComponent::Update(float dt){
 		if (!m_textureFrames) {
@@ -31,24 +50,8 @@ namespace nu {
 
 			m_frameTimer -= frameTime;
 		}
-	}
 
-	void SpriteAnimationRendererComponent::Draw(const Renderer& renderer){
-		if (!m_textureFrames) {
-			std::cerr << "Texture Frames Not Found. (Draw)" << std::endl;
-			return;
-		}
-
-		auto transform = GetOwner()->GetTransform();
-
-		Rect rect = m_textureFrames->GetFrameRect(m_frame);
-		renderer.DrawTexture(
-			*m_textureFrames->GetTexture(),
-			rect,
-			transform.position.x, 
-			transform.position.y,
-			transform.rotation,
-			transform.scale);
+		m_sourceRect = m_textureFrames->GetFrameRect(m_frame);
 	}
 
 	void SpriteAnimationRendererComponent::Read(const json::value_t& value){
@@ -58,14 +61,6 @@ namespace nu {
 		JSON_READ_NAME(value, "loop", m_loop);
 
 		std::string textureFrames;
-		JSON_READ_REQ(value, textureFrames);
-
-		if (!textureFrames.empty()) {
-			m_textureFrames = Resources().Get<TextureFrames>(textureFrames, Engine::Get().GetRenderer());
-			if (!m_textureFrames) {
-				std::cerr << "Texture Frames Not Loaded." << textureFrames << " (Read)" << std::endl;
-				return;
-			}
-		}
+		JSON_READ_NAME_REQ(value, "textureFrames", m_textureFramesName);
 	}
 }

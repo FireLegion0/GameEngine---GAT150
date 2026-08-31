@@ -3,6 +3,7 @@
 #include "Assets.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Renderer.h"
+#include "Components/PhysicsComponent.h"
 #include "Engine.h"
 #include "SpaceGame.h"
 
@@ -19,11 +20,25 @@ void Player::Update(float dt) {
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -100.0f;
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = 100.0f;
 
+	nu::PhysicsComponent* physComp = GetComponent<nu::PhysicsComponent>();
+	if (physComp) {
+		nu::Vector2 forward{ 1, 0 };
+		nu::Vector2 force = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
+
+		physComp->ApplyForce(force);
+		physComp->ApplyTorque(rotate);
+
+		Vector2 position = physComp->GetPosition();
+		position.x = Wrap(0.0f, 1280.0f, position.x);
+		position.y = Wrap(0.0f, 1024.0f, position.y);
+		physComp->SetPosition(position);
+	}
+
 	SetRotation(m_transform.rotation + rotate * dt);
 
 	nu::Vector2 velocity{ 1, 0 };
 	velocity = velocity.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
-	AddVelocity(velocity * dt);
+	//AddVelocity(velocity * dt);
 
 	if (thrust) {
 		nu::Particle particle;
@@ -48,37 +63,6 @@ void Player::Update(float dt) {
 		bullet->SetTag("PlayBullet");
 
 		m_scene->AddActor(std::move(bullet));
-
-		/*
-		BulletDesc desc;
-		desc.name = "Bullet";
-		desc.tag = "PlayBullet";
-		//desc.model = assets::bulletModel;
-		desc.texture = Resources().Get<Texture>("textures/bullet.png", Engine::Get().GetRenderer());
-		desc.transform = m_transform;
-		desc.transform.scale = 1;
-		desc.speed = 1250.0f;
-		desc.lifespan = 1.0f;
-
-			//Bullet* bullet = new Bullet{ desc };
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-			desc.transform.rotation += 20.0f;
-			//bullet = new Bullet{ desc };
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-			desc.transform.rotation += 20.0f;
-			//bullet = new Bullet{ desc };
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-			desc.transform.rotation -= 60.0f;
-			//bullet = new Bullet{ desc };
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-			desc.transform.rotation -= 20.0f;
-			//bullet = new Bullet{ desc };
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-		*/
 	}
 
 	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_X)) {
@@ -92,6 +76,11 @@ void Player::Update(float dt) {
 }
 
 void Player::OnCollision(Actor* other) {
+	bool inv = true;
+	if (inv) {
+		return;
+	}
+
 	if (other->GetTag() == "Enemy" || other->GetTag() == "Astroid") {
 		nu::Engine::Get().GetAudio().PlaySound("explode");
 		SetDestroyed(true);

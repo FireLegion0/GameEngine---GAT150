@@ -16,8 +16,6 @@ namespace nu {
         std::string tag;
         std::string name;
         Transform transform;
-        Vector2 velocity{ 0.0f, 0.0f };
-        float damping{ 0.0f };
         float lifespan{ 0 };
         bool destroyed{ false };
 
@@ -31,8 +29,6 @@ namespace nu {
         Actor(const ActorDesc& actorDesc) :
             m_tag{actorDesc.tag},
             m_transform{ actorDesc.transform },
-            m_velocity{ actorDesc.velocity },
-            m_damping{ actorDesc.damping },
             m_lifespan{ actorDesc.lifespan }
         { }
 
@@ -41,7 +37,10 @@ namespace nu {
         CLASS_PROTO(Actor)
 
         virtual void Update(float dt);
-        virtual void Draw(const class Renderer& renderer) const; 
+        virtual void Draw(const class Renderer& renderer) const;
+
+        virtual void Start();
+        virtual void OnDestroy();
 
         virtual void OnCollision(Actor* other) {}
 
@@ -51,10 +50,6 @@ namespace nu {
         void SetPosition(const Vector2& position) { m_transform.position = position; }
         void SetRotation(float rotation) { m_transform.rotation = rotation; }
         void SetScale(float scale) { m_transform.scale = scale; }
-
-        const Vector2& GetVelocity() const { return m_velocity; }
-        void SetVelocity(const Vector2& velocity) { m_velocity = velocity; }
-        void AddVelocity(const Vector2& velocity) { m_velocity += velocity; }
 
         const std::string& GetName() const { return m_name; }
 
@@ -67,6 +62,8 @@ namespace nu {
 
         void SetDestroyed(bool destroy) { m_destroyed = true; };
         bool GetDestroyed() const { return m_destroyed; }
+
+        bool GetPersist() const { return m_persist; }
 
 		virtual void Read(const json::value_t& value) override;
 
@@ -81,10 +78,9 @@ namespace nu {
         std::string m_tag;
 
         Transform m_transform;
-        Vector2 m_velocity{ 0.0f, 0.0f };
-        float m_damping{ 0.0f };
         float m_lifespan{ 0 };
         bool m_destroyed{ false };
+        bool m_persist{ false };
 
         std::vector<std::unique_ptr<Component>> m_components;
 

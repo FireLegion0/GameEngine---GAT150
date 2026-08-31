@@ -1,0 +1,41 @@
+{
+    "activeFile": "world.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Ground.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world.json": {
+            "scale": 1.5378124999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 439.26031294452355,
+                "y": 328.0634017476123
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/esingleton/OneDrive - Neumont College of Computer Science/Desktop/Neumont Work/GAT150 - Year 2 - Q1/Engine/Build/Assets/TileMap",
+    "last.imagePath": "C:/Users/esingleton/OneDrive - Neumont College of Computer Science/Desktop/Neumont Work/GAT150 - Year 2 - Q1/Engine/Build/Assets/Textures",
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "Ground.tsx",
+        "world.json"
+    ],
+    "project": "NewTileSet.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "Ground.tsx",
+        "world.json"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
