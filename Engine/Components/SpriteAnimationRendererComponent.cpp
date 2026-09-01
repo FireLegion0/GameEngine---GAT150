@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "SpriteAnimationRendererComponent.h"
-#include "Renderer/TextureFrames.h"
+#include "Renderer/textureFrames.h"
 #include "Math/MathUtils.h"
 #include "Math/Transform.h"
 #include "Framework/Actor.h"

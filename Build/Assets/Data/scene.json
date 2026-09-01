@@ -19,13 +19,13 @@
           "animations": [
             {
               "name": "run",
-              "textureFrames": "animations/run.json",
+              "texture_frames": "animations/run.json",
               "fps": 10,
               "loop": true
             },
             {
               "name": "idle",
-              "textureFrames": "animations/goblin_idle.json",
+              "texture_frames": "animations/goblin_idle.json",
               "fps": 10,
               "loop": true
             }

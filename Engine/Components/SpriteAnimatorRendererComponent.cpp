@@ -45,7 +45,7 @@ namespace nu {
 
 	void SpriteAnimatorRendererComponent::Play(const std::string& name){
 		auto iter = m_spriteAnimations.find(ToLower(name));
-		if (iter != m_spriteAnimations.end()) {
+		if (iter == m_spriteAnimations.end()) {
 			std::cerr << "Could not Find animation " << name << std::endl;
 			return;
 		}

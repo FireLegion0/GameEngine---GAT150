@@ -39,7 +39,7 @@ namespace nu {
 						JSON_READ(propertyValue, name);
 
 						// check if property name is TextureName
-						if (EqualsIgnoreCase(name, "texture_name"))
+						if (EqualsIgnoreCase(name, "TextureName"))
 						{
 							// read texture name value (texture name)
 							std::string value;
