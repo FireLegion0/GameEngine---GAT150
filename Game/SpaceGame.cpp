@@ -43,6 +43,7 @@ void SpaceGame::Update(float dt) {
 			break;
 		case GameState::StartLevel:
 			m_scene->RemvoeAllActors();
+			m_scene->Load("data/level.json");
 			SpawnPlayer();
 			//SpawnBoss();
 			m_spawnTime = 5.0f;
@@ -53,7 +54,6 @@ void SpaceGame::Update(float dt) {
 			m_bossSpawnTimer -= dt;
 			if (m_spawnTimer <= 0) {
 				m_spawnTimer = m_spawnTime;
-				SpawnEnemy();
 				SpawnEnemy();
 				SpawnAstroid();
 			}
@@ -75,7 +75,9 @@ void SpaceGame::Update(float dt) {
 }
 
 void SpaceGame::Draw(Renderer& renderer) {
-	renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/background.jpg", Engine::Get().GetRenderer()), 500, 500);
+	renderer.EnableCamera(false);
+
+	renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/forest_background.png", Engine::Get().GetRenderer()), 500, 500);
 
 	switch (m_gamestate) {
 	case GameState::Title:
@@ -96,6 +98,7 @@ void SpaceGame::Draw(Renderer& renderer) {
 	case GameState::GameOver:
 		break;
 	}
+	renderer.EnableCamera(true);
 
 	Game::Draw(renderer);
 }
@@ -119,18 +122,22 @@ void SpaceGame::SpawnPlayer() {
 
 void SpaceGame::SpawnEnemy() {
 	auto actor = Factory::Instance().Create<Actor>("EnemyProto");
-	actor->SetPosition({nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f)});
+	actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
 	m_scene->AddActor(std::move(actor));
+
+	auto actor2 = Factory::Instance().Create<Actor>("FlyingEnemyProto");
+	actor2->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+	m_scene->AddActor(std::move(actor2));
 }
 
 void SpaceGame::SpawnAstroid() {
-	auto actor = Factory::Instance().Create<Actor>("AstroidProto");
-	actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
-	m_scene->AddActor(std::move(actor));
+	//auto actor = Factory::Instance().Create<Actor>("AstroidProto");
+	//actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+	//m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnBoss() {
-	auto actor = Factory::Instance().Create<Actor>("BossProto");
-	actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
-	m_scene->AddActor(std::move(actor));
+	//auto actor = Factory::Instance().Create<Actor>("BossProto");
+	//actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+	//m_scene->AddActor(std::move(actor));
 }

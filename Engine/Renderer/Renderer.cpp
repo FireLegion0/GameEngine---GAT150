@@ -36,6 +36,7 @@ namespace nu {
             return false;
         }
 
+		SDL_SetDefaultTextureScaleMode(m_renderer, SDL_SCALEMODE_PIXELART);
 		SDL_SetRenderVSync(m_renderer, 1);
 
 		return true;
@@ -105,21 +106,27 @@ namespace nu {
 		}
 	}
 
-	void Renderer::DrawTexture(const Texture& texture, float x, float y, float angle, float scale, bool flipH) const {
+	void Renderer::DrawTexture(const Texture& texture, float x, float y, float angle, float scale, bool flipH, const Vector2& origin) const {
 		nu::Vector2 size = texture.GetSize();
+
+		float cameraX = (m_cameraEnabled) ? (m_camera.x - (m_width * 0.5f)): 0.0f;
+		float cameraY = (m_cameraEnabled) ? (m_camera.y - (m_height * 0.5f)): 0.0f;
 
 		SDL_FRect destRect;
 		destRect.w = size.x * scale;
 		destRect.h = size.y * scale;
 
-		destRect.x = x - (destRect.w * 0.5f);
-		destRect.y = y - (destRect.h * 0.5f);
+		destRect.x = (x - cameraX) - (destRect.w * origin.x);
+		destRect.y = (y - cameraY) - (destRect.h * origin.y);
 
 		// https://wiki.libsdl.org/SDL3/SDL_RenderTexture
 		SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 	}
 
-	void Renderer::DrawTexture(const Texture& texture, Rect& source, float x, float y, float angle, float scale, bool flipH) const {
+	void Renderer::DrawTexture(const Texture& texture, Rect& source, float x, float y, float angle, float scale, bool flipH, const Vector2& origin) const {
+		float cameraX = (m_cameraEnabled) ? (m_camera.x - (m_width * 0.5f)) : 0.0f;
+		float cameraY = (m_cameraEnabled) ? (m_camera.y - (m_height * 0.5f)) : 0.0f;
+
 		SDL_FRect sourceRect;
 		sourceRect.x = source.x;
 		sourceRect.y = source.y;
@@ -130,8 +137,8 @@ namespace nu {
 		destRect.w = source.w * scale;
 		destRect.h = source.h * scale;
 
-		destRect.x = x - (destRect.w * 0.5f);
-		destRect.y = y - (destRect.h * 0.5f);
+		destRect.x = (x - cameraX) - (destRect.w * origin.x);
+		destRect.y = (y - cameraY) - (destRect.h * origin.y);
 
 		// https://wiki.libsdl.org/SDL3/SDL_RenderTexture
 		SDL_RenderTextureRotated(m_renderer, texture.m_texture, &sourceRect, &destRect, angle, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);

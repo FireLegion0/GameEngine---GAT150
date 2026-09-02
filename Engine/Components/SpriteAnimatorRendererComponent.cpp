@@ -44,6 +44,10 @@ namespace nu {
 	}
 
 	void SpriteAnimatorRendererComponent::Play(const std::string& name){
+		if (EqualsIgnoreCase(name, m_spriteAnimation.name)) {
+			return;
+		}
+
 		auto iter = m_spriteAnimations.find(ToLower(name));
 		if (iter == m_spriteAnimations.end()) {
 			std::cerr << "Could not Find animation " << name << std::endl;
@@ -56,6 +60,10 @@ namespace nu {
 
 		m_texture = m_spriteAnimation.textureFrames->GetTexture();
 		m_sourceRect = m_spriteAnimation.textureFrames->GetFrameRect(m_frame);
+	}
+
+	bool SpriteAnimatorRendererComponent::IsAnimationDone() const{
+		return (m_frame == m_spriteAnimation.textureFrames->GetTotalFrames() - 1);
 	}
 
 	void SpriteAnimatorRendererComponent::Read(const json::value_t& value){

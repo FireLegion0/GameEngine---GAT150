@@ -1,7 +1,7 @@
 {
-  "texture_name": "textures/tileset.png",
-  "columns": 12,
-  "rows": 6,
-  "start_frame": 48,
-  "total_frames": 8
+  "texture_name": "textures/ghost-idle.png",
+  "columns": 7,
+  "rows": 1,
+  "start_frame": 0,
+  "total_frames": 7
 }

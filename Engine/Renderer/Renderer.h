@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Math/Vector2.h"
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_image/SDL_image.h>
@@ -22,11 +23,14 @@ namespace nu {
 			void DrawLine(float x1, float y1, float x2, float y2) const;
 
 			void DrawModel(const class Model& model, const struct Transform& transform) const;
-			void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false) const;
-			void DrawTexture(const class Texture& texture, struct Rect& source, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false) const;
+			void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{0.5f,0.5f }) const;
+			void DrawTexture(const class Texture& texture, struct Rect& source, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{ 0.5f,0.5f }) const;
 
 			int GetWidth() const { return m_width; }
 			int GetHeight() const { return m_height; }
+
+			void SetCamera(const Vector2& camera) { m_camera = camera; }
+			void EnableCamera(bool enable) { m_cameraEnabled = enable; }
 
 			friend class Text;
 			friend class Texture;
@@ -34,6 +38,9 @@ namespace nu {
 	private:
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
+
+		bool m_cameraEnabled = true;
+		Vector2 m_camera;
 
 		int m_width{ 0 };
 		int m_height{ 0 };

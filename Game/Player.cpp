@@ -28,10 +28,12 @@ void Player::Update(float dt) {
 		physComp->ApplyForce(force);
 		physComp->ApplyTorque(rotate);
 
-		Vector2 position = physComp->GetPosition();
-		position.x = Wrap(0.0f, 1280.0f, position.x);
-		position.y = Wrap(0.0f, 1024.0f, position.y);
-		physComp->SetPosition(position);
+		nu::Vector2 position = physComp->GetPosition();
+		//position.x = Wrap(0.0f, 1280.0f, position.x);
+		//position.y = Wrap(0.0f, 1024.0f, position.y);
+		//physComp->SetPosition(position);
+
+		nu::Engine::Get().GetRenderer().SetCamera(position);
 	}
 
 	SetRotation(m_transform.rotation + rotate * dt);

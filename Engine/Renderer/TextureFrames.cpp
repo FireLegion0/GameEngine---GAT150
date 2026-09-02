@@ -27,7 +27,7 @@ namespace nu {
 			return false;
 		}
 
-		JSON_READ_NAME(doc, "cols", m_numCols);
+		JSON_READ_NAME(doc, "columns", m_numCols);
 		JSON_READ_NAME(doc, "rows", m_numRows);
 		JSON_READ_NAME(doc, "start_frame", m_startFrame);
 		JSON_READ_NAME(doc, "total_frames", m_totalFrame);

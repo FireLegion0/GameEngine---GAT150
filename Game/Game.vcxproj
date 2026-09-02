@@ -180,6 +180,11 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpaceGame.cpp" />
     <ClCompile Include="SpriteGame.cpp" />
+    <ClCompile Include="SpriteGame\CharacterBase.cpp" />
+    <ClCompile Include="SpriteGame\Damager.cpp" />
+    <ClCompile Include="SpriteGame\EnemyController.cpp" />
+    <ClCompile Include="SpriteGame\FlyingEnemyController.cpp" />
+    <ClCompile Include="SpriteGame\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
@@ -195,11 +200,17 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpaceGame.h" />
     <ClInclude Include="SpriteGame.h" />
+    <ClInclude Include="SpriteGame\CharacterBase.h" />
+    <ClInclude Include="SpriteGame\Damager.h" />
+    <ClInclude Include="SpriteGame\EnemyController.h" />
+    <ClInclude Include="SpriteGame\FlyingEnemyController.h" />
+    <ClInclude Include="SpriteGame\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Build\Assets\Animations\bat_idle.json" />
     <None Include="..\Build\Assets\Animations\Goblin_Idle.json" />
     <None Include="..\Build\Assets\Animations\Run.json" />
+    <None Include="..\Build\Assets\Data\level.json" />
     <None Include="..\Build\Assets\Data\scene.json" />
     <None Include="..\Build\Assets\TileMap\world.json" />
   </ItemGroup>

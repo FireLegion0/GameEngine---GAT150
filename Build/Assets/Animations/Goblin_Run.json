@@ -2,6 +2,6 @@
   "texture_name": "textures/animation.png",
   "columns": 12,
   "rows": 6,
-  "start_frame": 36,
-  "total_frames": 4
+  "start_frame": 48,
+  "total_frames": 8
 }
