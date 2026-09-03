@@ -147,7 +147,7 @@
     },
     {
       "name": "FlyingEnemyProto",
-      "type": "EnemyController",
+      "type": "FlyingEnemyController",
       "tag": "Enemy",
       "active": true,
       "speed": 1000.0,
@@ -204,7 +204,7 @@
     {
       "name": "DamagerProto",
       "type": "Damager",
-      "tag": "Enemy",
+      "tag": "Test",
       "active": true,
       "proto": true,
       "damage": 5,
@@ -223,7 +223,7 @@
           "type": "Box2DPhysicsComponent",
           "linear_damping": 2.0,
           "angular_damping": 2.0,
-          "shape": "capsule",
+          "shape": "circle",
           "size": [ 48, 48 ],
           "constrain_angle": true,
           "gravity_scale": 0,

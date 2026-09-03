@@ -71,7 +71,7 @@ namespace nu {
 		}
 
 		Vector2 textureSize = layer.texture->GetSize();
-		int tilesPerRow = textureSize.x / m_tileWidth;
+		int tilesPerRow = (int)(textureSize.x / m_tileWidth);
 
 		int col = (tileId - 1) % tilesPerRow;
 		int row = (tileId - 1) / tilesPerRow;

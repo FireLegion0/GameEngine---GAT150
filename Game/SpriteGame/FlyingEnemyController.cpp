@@ -23,10 +23,12 @@ void FlyingEnemyController::Update(float dt) {
 	switch (m_state) {
 	case CharacterBase::CharState::Move:
 	{
-		auto player = m_scene->GetActorByName("PlayerProto");
+		m_hasAttacked = false;
+		auto player = m_scene->GetActorByName<Actor>("PlayerProto");
 		if (player) {
 			nu::Vector2 position = GetTransform().position;
 			nu::Vector2 playerPosition = player->GetTransform().position;
+
 			nu::Vector2 direction = playerPosition - position;
 
 			m_rendererComponent->SetFlipH(direction.x < 0.0f);
@@ -36,7 +38,7 @@ void FlyingEnemyController::Update(float dt) {
 				m_rendererComponent->Play("attack");
 			}
 
-			m_physicsComponent->ApplyForce(direction.Normalized() * 500.0f);
+			m_physicsComponent->ApplyForce(direction.Normalized() * 800.0f);
 		}
 	}
 		break;
@@ -63,7 +65,7 @@ void FlyingEnemyController::Update(float dt) {
 		if (m_rendererComponent->IsAnimationDone()) {
 			m_state = CharState::Move;
 			m_rendererComponent->Play("idle");
-			Damager* damager = dynamic_cast<Damager*>(m_scene->GetActorByName("PlayerDamager"));
+			Damager* damager = dynamic_cast<Damager*>(m_scene->GetActorByName("EnemyDamager"));
 			if (damager) {
 				m_health -= damager->GetDamage();
 			}
