@@ -1,3 +1,5 @@
+<img width="600" height="500" alt="Screenshot 2026-09-03 100836" src="https://github.com/user-attachments/assets/07457f56-1d2c-458f-8843-5a845188055f" />
+
 **My Game Engine - A random little Platformer Game Engine**
 
 Create a README for my game engine project. 
