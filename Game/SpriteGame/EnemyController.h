@@ -19,6 +19,8 @@ public:
 	void Read(const nu::json::value_t& value) override;
 
 protected:
+	bool m_hasAttacked{ false };
+
 	nu::PhysicsComponent* m_physicsComponent{ nullptr };
 	nu::SpriteAnimatorRendererComponent* m_rendererComponent{ nullptr };
 };

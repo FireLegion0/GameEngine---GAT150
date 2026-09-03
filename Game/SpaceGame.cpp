@@ -51,15 +51,9 @@ void SpaceGame::Update(float dt) {
 			break;
 		case GameState::Game:
 			m_spawnTimer -= dt;
-			m_bossSpawnTimer -= dt;
 			if (m_spawnTimer <= 0) {
 				m_spawnTimer = m_spawnTime;
 				SpawnEnemy();
-				SpawnAstroid();
-			}
-			if (m_bossSpawnTimer <= 0) {
-				m_bossSpawnTimer = m_bossSpawnTime;
-				SpawnBoss();
 			}
 			break;
 		case GameState::GameOver:
@@ -75,9 +69,13 @@ void SpaceGame::Update(float dt) {
 }
 
 void SpaceGame::Draw(Renderer& renderer) {
-	renderer.EnableCamera(false);
 
+	renderer.EnableCamera(false);
 	renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/forest_background.png", Engine::Get().GetRenderer()), 500, 500);
+	renderer.EnableCamera(true);
+	Game::Draw(renderer);
+
+	renderer.EnableCamera(false);
 
 	switch (m_gamestate) {
 	case GameState::Title:
@@ -99,8 +97,6 @@ void SpaceGame::Draw(Renderer& renderer) {
 		break;
 	}
 	renderer.EnableCamera(true);
-
-	Game::Draw(renderer);
 }
 
 void SpaceGame::OnPlayerDeath() {
@@ -128,16 +124,4 @@ void SpaceGame::SpawnEnemy() {
 	auto actor2 = Factory::Instance().Create<Actor>("FlyingEnemyProto");
 	actor2->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
 	m_scene->AddActor(std::move(actor2));
-}
-
-void SpaceGame::SpawnAstroid() {
-	//auto actor = Factory::Instance().Create<Actor>("AstroidProto");
-	//actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
-	//m_scene->AddActor(std::move(actor));
-}
-
-void SpaceGame::SpawnBoss() {
-	//auto actor = Factory::Instance().Create<Actor>("BossProto");
-	//actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
-	//m_scene->AddActor(std::move(actor));
 }

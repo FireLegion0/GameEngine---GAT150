@@ -5,6 +5,7 @@
 #include "Framework/Scene.h"
 #include "Damager.h"
 #include "Engine.h"
+#include "../SpaceGame.h"
 
 FACTORY_REGISTER(EnemyController)
 
@@ -35,10 +36,10 @@ void EnemyController::Update(float dt) {
 			else if (playerPosition.x > position.x) {
 				dir = 1.0f;
 			}
-			if (playerPosition.x < (position.x + 50.0f) && playerPosition.x > (position.x - 50.0f)) {
-				m_state = CharState::Attack;
-				m_rendererComponent->Play("attack");
-			}
+			//if (playerPosition.x < (position.x + 50.0f) && playerPosition.x > (position.x - 50.0f)) {
+			//	m_state = CharState::Attack;
+			//	m_rendererComponent->Play("attack");
+			//}
 		}
 
 
@@ -57,7 +58,9 @@ void EnemyController::Update(float dt) {
 	{
 
 		if (m_rendererComponent->GetFrame() == 3) {
+			bool m_hasAttacked{ false };
 			auto damager = nu::Factory::Instance().Create<Damager>("DamagerProto");
+			damager->SetDamage(1.0f);
 			damager->SetPosition(GetTransform().position + nu::Vector2{ (m_rendererComponent->GetFlipH() ? -100.0f : 100.0f), 0.0f });
 			damager->SetTag("EnemyDamager");
 			m_scene->AddActor(std::move(damager));
@@ -81,10 +84,7 @@ void EnemyController::Update(float dt) {
 		break;
 	}
 
-	
-
 	m_physicsComponent->SetVelocity(velocity);
-
 	CharacterBase::Update(dt);
 }
 
@@ -98,6 +98,7 @@ void EnemyController::OnCollision(nu::Actor* other) {
 		}
 		if (m_health <= 0.0f) {
 			m_destroyed = true;
+			((SpaceGame*)m_scene->GetGame())->AddPoints(200);
 		}
 
 		other->SetDestroyed(true);

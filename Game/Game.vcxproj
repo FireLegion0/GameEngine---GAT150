@@ -213,6 +213,7 @@
     <None Include="..\Build\Assets\Data\level.json" />
     <None Include="..\Build\Assets\Data\scene.json" />
     <None Include="..\Build\Assets\TileMap\world.json" />
+    <None Include="..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

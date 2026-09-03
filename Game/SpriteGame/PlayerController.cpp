@@ -5,6 +5,7 @@
 #include "Framework/scene.h"
 #include "Damager.h"
 #include "Engine.h"
+#include "../SpaceGame.h"
 
 FACTORY_REGISTER(PlayerController)
 
@@ -86,6 +87,7 @@ void PlayerController::OnCollision(nu::Actor* other){
 		}
 		if (m_health <= 0.0f) {
 			m_destroyed = true;
+			((SpaceGame*)m_scene->GetGame())->OnPlayerDeath();
 		}
 
 		other->SetDestroyed(true);

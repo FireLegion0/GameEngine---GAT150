@@ -5,6 +5,7 @@
 #include "Framework/Scene.h"
 #include "Damager.h"
 #include "Engine.h"
+#include "../SpaceGame.h"
 
 FACTORY_REGISTER(FlyingEnemyController)
 
@@ -23,7 +24,6 @@ void FlyingEnemyController::Update(float dt) {
 	switch (m_state) {
 	case CharacterBase::CharState::Move:
 	{
-		m_hasAttacked = false;
 		auto player = m_scene->GetActorByName<Actor>("PlayerProto");
 		if (player) {
 			nu::Vector2 position = GetTransform().position;
@@ -35,6 +35,7 @@ void FlyingEnemyController::Update(float dt) {
 
 			if (direction.Length() < 50.0f) {
 				m_state = CharState::Attack;
+				m_hasAttacked = false;
 				m_rendererComponent->Play("attack");
 			}
 
@@ -46,7 +47,7 @@ void FlyingEnemyController::Update(float dt) {
 	{
 		if (m_hasAttacked == false && m_rendererComponent->GetFrame() == 3) {
 			auto damager = nu::Factory::Instance().Create<Damager>("DamagerProto");
-			damager->SetDamage(1.0f);
+			damager->SetDamage(3.0f);
 			damager->SetPosition(GetTransform().position);
 			damager->SetTag("EnemyDamager");
 			damager->SetScale(1.5f);
@@ -71,6 +72,7 @@ void FlyingEnemyController::Update(float dt) {
 			}
 			if (m_health <= 0.0f) {
 				m_destroyed = true;
+				((SpaceGame*)m_scene->GetGame())->AddPoints(400);
 			}
 		}
 	}
@@ -95,6 +97,7 @@ void FlyingEnemyController::OnCollision(nu::Actor* other) {
 		}
 		if (m_health <= 0.0f) {
 			m_destroyed = true;
+			((SpaceGame*)m_scene->GetGame())->AddPoints(400);
 		}
 
 		other->SetDestroyed(true);

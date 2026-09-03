@@ -30,8 +30,6 @@ public:
 private:
 	void SpawnPlayer();
 	void SpawnEnemy();
-	void SpawnAstroid();
-	void SpawnBoss();
 
 	int m_score{ 0 };
 	int m_live{ 0 };
@@ -40,9 +38,6 @@ private:
 
 	float m_spawnTime = 5.0f;
 	float m_spawnTimer = m_spawnTime;
-
-	float m_bossSpawnTime = 15.0f;
-	float m_bossSpawnTimer = m_bossSpawnTime;
 
 	GameState m_gamestate = GameState::Title;
 
